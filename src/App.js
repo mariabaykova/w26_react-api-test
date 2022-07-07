@@ -10,8 +10,9 @@ function App() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`https://jsonplaceholder.typicode.com/photos`)
-    // fetch(`.data/data.json`)
+    // fetch(`https://jsonplaceholder.typicode.com/photos`)
+    // fetch('.data/data.json')
+    fetch('http://127.0.0.1:5500/week26/w26_sh-api/src/data/data.json')
       .then((response) => {
         if (!response.ok) {
           throw new Error(
@@ -19,6 +20,17 @@ function App() {
           );
         }
         // console.log("response " + response.json());
+        console.log("response " + response);
+        console.log("type of response " + typeof response);
+        console.log("response.status " + response.status);
+        console.log("response.url " + response.url);
+        for ( let key in response ) {
+          console.log("key --> " + key);
+          console.log("--> " + response[key]);
+        }
+        // for ( let kk in response.body) {
+        //     console.log("----> " + kk + " " + response.body[kk]);
+        // }
         return response.json();
       })
       .then((actualData) => {
@@ -45,12 +57,12 @@ function App() {
         <div>{`There is a problem while fetching data - ${error}`}</div>
       )}
         {data &&
-          data.map(({ id, title, url }) => (
+          data.map(({ heroId, heroName, imagePath, heroDescription }) => (
             <HeroCard 
-              key={id}
-              title={title}
-              heroDescription={title}
-              imgPath={url}
+              key={heroId}
+              title={heroName}
+              heroDescription={heroDescription}
+              imgPath={imagePath}
             /> 
           ))}
     </div>
